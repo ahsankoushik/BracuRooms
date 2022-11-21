@@ -37,6 +37,12 @@ class ExtUser(models.Model):
     teacher = models.BooleanField(default=False, null = True)
     admin = models.BooleanField(default= False, null= True)
 
+    def __str__(self) ->str:
+        return User.objects.get(id = self.user.id).username
+        # print(self.user.id)
+
+        # return 'a'
+
     def role(self) -> str:
         '''Returns the role of the user'''
         r = 'set first'
@@ -46,10 +52,17 @@ class ExtUser(models.Model):
         return r
 
 
-
     def is_admin(self) -> bool:
         '''Returns if the user is a admin or not'''
         return self.admin
+
+    def is_teacher(self) -> bool:
+        '''Returns if the user is a teacher or not'''
+        return self.teacher
+    
+    def is_student(self) -> bool:
+        '''Returns if the user is a student or not'''
+        return self.student
     
 
     # def is_

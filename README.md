@@ -21,8 +21,19 @@ for unix based systems(linux & macos): <br>
    
 4. You can use sqlite3(no more configuration required)<br> But if you are using Mysql/Postgre/Oracle then you can follow this [link](https://docs.djangoproject.com/en/4.0/ref/settings/#databases)
 5. The make migrations and migrate the migrations to the database: <br>
-`python manage.py makemigrations` <br>
-`python manage.py migrate`
-6. Create a super ueser :
+<code>python manage.py makemigrations <br>
+python manage.py migrate</code> 
+<br>
+6. Create a super ueser :<br>
    `python manage.py createsuperuser`
 
+## Mysql Configuration 
+First log in to your mysql database and then crate **BracuRooms** database then execute this lines of sql:
+<br>
+<code>
+CREATE USER 'group3'@'localhost' IDENTIFIED BY 'group3';
+<br>
+GRANT ALL PRIVILEGES ON BracuRooms.* TO 'group3'@'localhost' WITH GRANT OPTION;
+<br>
+FLUSH PRIVILEGES;
+<code>
