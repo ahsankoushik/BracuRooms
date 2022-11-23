@@ -12,3 +12,8 @@ def home(request):
     except:
         role = 'set role first'
     return render(request,'views/home.html',{'user':request.user, 'role':role})
+
+
+@login_required
+def apply(request):
+    return HttpResponse('<h1>This is the Apply tab.</h1>')
