@@ -16,4 +16,6 @@ def home(request):
 
 @login_required
 def apply(request):
-    return HttpResponse('<h1>This is the Apply tab.</h1>')
+    u = ExtUser.objects.get(user = request.user.id)
+
+    return render(request, 'views/apply.html', {'teacher':u.is_teacher(),'admin':u.is_admin()})

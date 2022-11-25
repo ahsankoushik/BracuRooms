@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Apply for Room</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+</head>
+
+<body style="/*background: url(&quot;design.jpg&quot;);*/background-position: 0 -60px;">
+    {% include 'components/navbar.html' %}
+    <!-- <header class="bg-primary-gradient">
+        <div class="container pt-4 pt-xl-5">
+            <div class="row pt-5">
+                <div class="col-md-8 col-xl-6 text-center text-md-start mx-auto">
+                    <div class="text-center">
+                        <p class="fw-bold text-success mb-2">Voted #1 Worldwide</p>
+                        <h1 class="fw-bold">The best solution for you and your customers</h1>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-10 mx-auto">
+                    <div class="position-relative" style="display: flex;flex-wrap: wrap;justify-content: flex-end;">
+                        <div style="position: relative;flex: 0 0 45%;transform: translate3d(-15%, 35%, 0);"><img class="img-fluid" data-bss-parallax="" data-bss-parallax-speed="0.8" src="assets/img/products/3.jpg"></div>
+                        <div style="position: relative;flex: 0 0 45%;transform: translate3d(-5%, 20%, 0);"><img class="img-fluid" data-bss-parallax="" data-bss-parallax-speed="0.4" src="assets/img/products/2.jpg"></div>
+                        <div style="position: relative;flex: 0 0 60%;transform: translate3d(0, 0%, 0);"><img class="img-fluid" data-bss-parallax="" data-bss-parallax-speed="0.25" src="assets/img/products/1.jpg"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header> -->
+    <!-- <section class="py-5">
+        <div class="container text-center py-5">
+            <p class="mb-4" style="font-size: 1.6rem;">Used by <span class="bg-success-light p-1"><strong>2400+</strong></span>&nbsp;of the best companies in the world.</p><a href="#"> <img class="m-3" src="assets/img/brands/instacart.png"></a><a href="#"> <img class="m-3" src="assets/img/brands/kickstarter.png"></a><a href="#"> <img class="m-3" src="assets/img/brands/lyft.png"></a><a href="#"> <img class="m-3" src="assets/img/brands/shopify.png"></a><a href="#"> <img class="m-3" src="assets/img/brands/pinterest.png"></a><a href="#"> <img class="m-3" src="assets/img/brands/twitter.png"></a>
+        </div>
+    </section> -->
+    <section>
+        <div class="container-fluid pt-4 pt-xl-5 my-5  px-5">
+            <div class="card shadow">
+                <form method="post" id="form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="card-header py-3">
+                        <div class="row">
+                            <div class="col ">
+                                <h4 class=" text-primary mw-0 fw-bold" style="text-align: center ;">Apply Form for a Room</h4>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                            <div class="row">
+                                <div class="col col-md-12 col-sm-12 col-lg-6 col-12">
+                                    <div class="mb-3">
+                                        <!--  -->
+                                        <label class="form-label" for="id_raw">Product:</label>
+                                        <select id="id_raw" placeholder="Select Product">
+                                          </select>
+                                        <!--  -->
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="id_quantity">Qunatity:</label>
+                                        <input class="form-control inp" type="number" name="quantity" required id="id_quantity" step="1"  placeholder="Total Quantity in ton" >
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="id_total_sheet">Total sheet:</label>
+                                        <input class="form-control inp" type="number" name="total_sheet" required id="id_total_sheet" step="1"  placeholder="Total Sheet per ton" >
+                                    </div> 
+                                    <div class="mb-3">
+                                        <label class="form-label" for="id_paper_rate">Paper Rate:</label>
+                                        <input class="form-control inp" type="number" name="paper_rate" step="any" required id="id_paper_rate"  placeholder="Paper rate per ton" >
+                                    </div> 
+                                    <div class="mb-3">
+                                        <label class="form-label" for="id_design_charge">Design charge::</label>
+                                        <input class="form-control inp" type="number" name="design_charge" step="any" required id="id_design_charge"  placeholder="The charge of Design" >
+                                    </div> 
+                                    <div class="mb-3">
+                                        <label class="form-label" for="id_plate_and_process">Plate and process:</label>
+                                        <input class="form-control inp" type="number" name="plate_and_process" step="any" required id="id_plate_and_process"  placeholder="The charge of plate &amp; process" >
+                                    </div>                                                           
+                                    <div class="mb-3">
+                                        <label class="form-label" for="id_Paper_Delivery_Transport_Cost">Paper Delivery Transport Cost:</label>
+                                        <input class="form-control inp" type="number" name="Paper_Delivery_Transport_Cost"  step="any" required id="id_Paper_Delivery_Transport_Cost"  placeholder="Paper Delivery Transport Cost" >
+                                    </div>                               
+                                    <div class="mb-3">
+                                        <label class="form-label" for="id_Paper_Unloading_Cost">Paper Unloading Cost For Cutting:</label>
+                                        <input class="form-control inp" type="number" name="Paper_Unloading_Cost" step="any" required id="id_Paper_Unloading_Cost"  placeholder="Paper Unloading Cost For Cutting" >
+                                    </div> 
+                                </div>
+                                <div class="col col-md-12 col-sm-12 col-lg-6 col-12">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="id_printing_Rate">Printing Rate:</label>
+                                        <input class="form-control inp" type="number" name="printing_Rate" step="any" required id="id_printing_Rate" placeholder="Printing Rate/1000 sheet">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="id_printed_transport">Printed Paper Transport to Cutting Charge:</label>
+                                        <input class="form-control inp" type="number" name="printed_transport"   step="any" required id="id_printed_transport"  placeholder="Printed Paper Transport to Cutting Charge" >
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="id_cutting_rate">Cutting rate:</label>
+                                        <input class="form-control" type="number" name="cutting_rate" step="any" required id="id_cutting_rate"  placeholder="Paper Cutting rate" >
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="id_cutting_transport">Cutting Paper Transport to Printing Charge:</label>
+                                        <input class="form-control inp" type="number" name="cutting_transport"   step="any" required id="id_cutting_transport" placeholder="Cutting Paper Transport to Printing Charge" >
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="id_unloading_cost">Unloading cost:</label>
+                                        <input class="form-control inp" type="number" name="unloading_cost"   step="any" required id="id_unloading_cost"  placeholder="Unloading Cost of the paper" >
+                                    </div> 
+                                    <div class="mb-3">
+                                        <label class="form-label"  for="id_fan_to_factory">Fan to factory:</label>
+                                        <input class="form-control inp" type="number" name="fan_to_factory"   step="any" required id="id_fan_to_factory"  placeholder="Fan to factory transport cost" >
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="id_factory_cost">Factory cost:</label>
+                                        <input class="form-control inp" type="number" name="factory_cost"   step="any" required id="id_factory_cost"  placeholder="Factory Cost per Cup" >
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="form-label" for="id_profit_margin">Profit margin:</label>
+                                        <input class="form-control inp" type="number" name="profit_margin"   step="any" required id="id_profit_margin"  placeholder="Profit margin per cup" >
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <div class="row">
+                            <div class="col " style="background-color: #f8f9fc;">
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src=""></script>
+</body>
+
+</html>
