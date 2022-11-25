@@ -23,7 +23,7 @@ for unix based systems(linux & macos): <br>
 5. The make migrations and migrate the migrations to the database: <br>
 `python manage.py makemigrations` <br>
 `python manage.py migrate`
-<br>
+
 6. Create a super ueser :<br>
    `python manage.py createsuperuser`
 

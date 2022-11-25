@@ -9,6 +9,8 @@
     <title>Apply for Room</title>
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+    
+    <link rel="stylesheet" href="{% static 'selectise/selectise.css' %}">
 </head>
 
 <body style="/*background: url(&quot;design.jpg&quot;);*/background-position: 0 -60px;">
@@ -55,77 +57,56 @@
                                 <div class="col col-md-12 col-sm-12 col-lg-6 col-12">
                                     <div class="mb-3">
                                         <!--  -->
-                                        <label class="form-label" for="id_raw">Product:</label>
-                                        <select id="id_raw" placeholder="Select Product">
+                                        <label class="form-label" for="room">Room:</label>
+                                        <select id="room" placeholder="room_number">
                                           </select>
                                         <!--  -->
                                     </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" for="id_quantity">Qunatity:</label>
-                                        <input class="form-control inp" type="number" name="quantity" required id="id_quantity" step="1"  placeholder="Total Quantity in ton" >
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" for="id_total_sheet">Total sheet:</label>
-                                        <input class="form-control inp" type="number" name="total_sheet" required id="id_total_sheet" step="1"  placeholder="Total Sheet per ton" >
-                                    </div> 
-                                    <div class="mb-3">
-                                        <label class="form-label" for="id_paper_rate">Paper Rate:</label>
-                                        <input class="form-control inp" type="number" name="paper_rate" step="any" required id="id_paper_rate"  placeholder="Paper rate per ton" >
-                                    </div> 
-                                    <div class="mb-3">
-                                        <label class="form-label" for="id_design_charge">Design charge::</label>
-                                        <input class="form-control inp" type="number" name="design_charge" step="any" required id="id_design_charge"  placeholder="The charge of Design" >
-                                    </div> 
-                                    <div class="mb-3">
-                                        <label class="form-label" for="id_plate_and_process">Plate and process:</label>
-                                        <input class="form-control inp" type="number" name="plate_and_process" step="any" required id="id_plate_and_process"  placeholder="The charge of plate &amp; process" >
-                                    </div>                                                           
-                                    <div class="mb-3">
-                                        <label class="form-label" for="id_Paper_Delivery_Transport_Cost">Paper Delivery Transport Cost:</label>
-                                        <input class="form-control inp" type="number" name="Paper_Delivery_Transport_Cost"  step="any" required id="id_Paper_Delivery_Transport_Cost"  placeholder="Paper Delivery Transport Cost" >
-                                    </div>                               
-                                    <div class="mb-3">
-                                        <label class="form-label" for="id_Paper_Unloading_Cost">Paper Unloading Cost For Cutting:</label>
-                                        <input class="form-control inp" type="number" name="Paper_Unloading_Cost" step="any" required id="id_Paper_Unloading_Cost"  placeholder="Paper Unloading Cost For Cutting" >
-                                    </div> 
+                                    <!-- r -->
+                                    
                                 </div>
                                 <div class="col col-md-12 col-sm-12 col-lg-6 col-12">
                                     <div class="mb-3">
-                                        <label class="form-label" for="id_printing_Rate">Printing Rate:</label>
-                                        <input class="form-control inp" type="number" name="printing_Rate" step="any" required id="id_printing_Rate" placeholder="Printing Rate/1000 sheet">
+                                        <label class="form-label" for="date">Date:</label>
+                                        <input class="form-control inp" type="date" name="date" step="any" required id="date" >
                                     </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" for="id_printed_transport">Printed Paper Transport to Cutting Charge:</label>
-                                        <input class="form-control inp" type="number" name="printed_transport"   step="any" required id="id_printed_transport"  placeholder="Printed Paper Transport to Cutting Charge" >
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" for="id_cutting_rate">Cutting rate:</label>
-                                        <input class="form-control" type="number" name="cutting_rate" step="any" required id="id_cutting_rate"  placeholder="Paper Cutting rate" >
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" for="id_cutting_transport">Cutting Paper Transport to Printing Charge:</label>
-                                        <input class="form-control inp" type="number" name="cutting_transport"   step="any" required id="id_cutting_transport" placeholder="Cutting Paper Transport to Printing Charge" >
-                                    </div>
-                                    <div class="mb-3">
-                                        <label class="form-label" for="id_unloading_cost">Unloading cost:</label>
-                                        <input class="form-control inp" type="number" name="unloading_cost"   step="any" required id="id_unloading_cost"  placeholder="Unloading Cost of the paper" >
-                                    </div> 
-                                    <div class="mb-3">
-                                        <label class="form-label"  for="id_fan_to_factory">Fan to factory:</label>
-                                        <input class="form-control inp" type="number" name="fan_to_factory"   step="any" required id="id_fan_to_factory"  placeholder="Fan to factory transport cost" >
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label class="form-label" for="id_factory_cost">Factory cost:</label>
-                                        <input class="form-control inp" type="number" name="factory_cost"   step="any" required id="id_factory_cost"  placeholder="Factory Cost per Cup" >
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label class="form-label" for="id_profit_margin">Profit margin:</label>
-                                        <input class="form-control inp" type="number" name="profit_margin"   step="any" required id="id_profit_margin"  placeholder="Profit margin per cup" >
+                                    
+                                </div>
+                            </div>
+                            <div id="times">
+                                <div class="row" id="row_1">
+                                    <div class="col col-12">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="room">Time:</label>
+                                            <select id="time_1" placeholder="room_number">
+                                                <option value="1">8:00am - 9:20am</option>
+                                                <option value="2">9:30am - 10:50am</option>
+                                                <option value="3">11:00am - 12:20am</option>
+                                                <option value="4">12:30am - 1:50am</option>
+                                                <option value="5">2:00am - 3:20am</option>
+                                                <option value="6">3:30am - 5:20am</option>
+                                              </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col col-lg-6 col-sm-6 col-12 col-md-6">
+                                    <button type="button" class="btn btn-primary container-fluid" onclick="add_another();">Add Another</button>
+                                </div>
+                                <div class="col col-lg-6 col-sm-6 col-12 col-md-6">
+                                    <button type="button" class="btn btn-primary container-fluid" onclick="remove_last();">Remove</button>
+                                </div>
+                            </div>
+                            <div class="row my-3">
+                                <div class="col-12">
+                                    <div class="input-group">
+                                        <span class="input-group-text">Reason</span>
+                                        <textarea id="reason" class="form-control" aria-label="With textarea"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
                     </div>
                     <div class="card-footer text-center">
                         <div class="row">
@@ -139,9 +120,11 @@
         </div>
     </section>
     
-    <script src="{% static 'js/jquery.js' %}"></script>
+
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-    <script src=""></script>
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'selectise/selectise.js' %}"></script>
+    <script src="{% static 'js/apply.js' %}"></script>
 </body>
 
 </html>

@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Rooms</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+</head>
+
+<body style="/*background: url(&quot;design.jpg&quot;);*/background-position: 0 -60px;">
+    {% include 'components/navbar.html' %}
+    <!-- <header class="bg-primary-gradient">
+        <div class="container pt-4 pt-xl-5">
+            <div class="row pt-5">
+                <div class="col-md-8 col-xl-6 text-center text-md-start mx-auto">
+                    <div class="text-center">
+                        <p class="fw-bold text-success mb-2">Voted #1 Worldwide</p>
+                        <h1 class="fw-bold">The best solution for you and your customers</h1>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-10 mx-auto">
+                    <div class="position-relative" style="display: flex;flex-wrap: wrap;justify-content: flex-end;">
+                        <div style="position: relative;flex: 0 0 45%;transform: translate3d(-15%, 35%, 0);"><img class="img-fluid" data-bss-parallax="" data-bss-parallax-speed="0.8" src="assets/img/products/3.jpg"></div>
+                        <div style="position: relative;flex: 0 0 45%;transform: translate3d(-5%, 20%, 0);"><img class="img-fluid" data-bss-parallax="" data-bss-parallax-speed="0.4" src="assets/img/products/2.jpg"></div>
+                        <div style="position: relative;flex: 0 0 60%;transform: translate3d(0, 0%, 0);"><img class="img-fluid" data-bss-parallax="" data-bss-parallax-speed="0.25" src="assets/img/products/1.jpg"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header> -->
+    <!-- <section class="py-5">
+        <div class="container text-center py-5">
+            <p class="mb-4" style="font-size: 1.6rem;">Used by <span class="bg-success-light p-1"><strong>2400+</strong></span>&nbsp;of the best companies in the world.</p><a href="#"> <img class="m-3" src="assets/img/brands/instacart.png"></a><a href="#"> <img class="m-3" src="assets/img/brands/kickstarter.png"></a><a href="#"> <img class="m-3" src="assets/img/brands/lyft.png"></a><a href="#"> <img class="m-3" src="assets/img/brands/shopify.png"></a><a href="#"> <img class="m-3" src="assets/img/brands/pinterest.png"></a><a href="#"> <img class="m-3" src="assets/img/brands/twitter.png"></a>
+        </div>
+    </section> -->
+    {% if user.is_superuser %}
+    <section>
+        <div class="container-fluid pt-4 pt-xl-5 my-5  px-5">
+            <div class="card shadow">
+                <form method="post" id="form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="card-header py-3">
+                        <div class="row">
+                            <div class="col ">
+                                <h4 class=" text-primary mw-0 fw-bold" style="text-align: center ;">Add a Room</h4>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                            <div class="row">
+                                <div class="col col-md-12 col-sm-12 col-lg-6 col-12">                        
+                                    <div class="mb-3">
+                                        <label class="form-label" for="room_number">Room Number:</label>
+                                        <input class="form-control inp" type="text" name="room_number" minlength="7" maxlength="9" required id="room_number"  placeholder="UB******" >
+                                    </div> 
+                                </div>
+                                <div class="col col-md-12 col-sm-12 col-lg-6 col-12">
+                                    <div class="mb-3">
+                                        <!--  -->
+                                        <label class="form-label" for="room_type">Room Type:</label>
+                                        <select id="room_type" class="form-select" required placeholder="Select Room">
+                                            <option value="class">Class</option>
+                                            <option value="lab">Lab</option>
+                                          </select>
+                                        <!--  -->
+                                    </div>   
+                                </div>
+                            </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <div class="row">
+                            <div class="col " style="background-color: #f8f9fc;">
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+    {% else %} 
+        {% include 'components/unauthorized_view.html' %}
+    
+    {% endif %}
+    
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/rooms.js' %}"></script>
+</body>
+
+</html>

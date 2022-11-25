@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.core.validators import validate_comma_separated_integer_list
 # Create your models here.
 from django.db import models
 from django.contrib.auth.models import User
@@ -8,8 +8,10 @@ from django.contrib.auth.models import User
 
 
 class Room(models.Model):
-    room_number = models.CharField(max_length=8)
+    room_number = models.CharField(max_length=8,unique=True)
     room_type = models.CharField(max_length=30)
+    seats = models.IntegerField(default=30)
+    booked = models.IntegerField(blank=True, default=0)
 
 
     def __str__(self):
@@ -20,55 +22,32 @@ class Room(models.Model):
 
 
 
-
 class Booking(models.Model):
     date = models.DateField(null = False )
-    time_slot = models.IntegerField(null = False)
+    time_slot = models.CharField(max_length=200,default='')
     room = models.ForeignKey(Room, on_delete = models.CASCADE)
+    reason = models.CharField(max_length=500,null=True)
+    approval = models.BooleanField(null=True)
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+
+
 
     class Meta:
-        db_table = 'Bookings'
+        db_table = 'Booking'
 
 
 
-class ExtUser(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    student = models.BooleanField(default=False, null = True)
-    teacher = models.BooleanField(default=False, null = True)
-    admin = models.BooleanField(default= False, null= True)
 
-    def __str__(self) ->str:
-        return User.objects.get(id = self.user.id).username
-        # print(self.user.id)
-
-        # return 'a'
-
-    def role(self) -> str:
-        '''Returns the role of the user'''
-        r = 'set first'
-        if self.student:r = 'student'
-        if self.teacher: r = 'teacher' 
-        if self.admin: r = 'admin'
-        return r
-
-
-    def is_admin(self) -> bool:
-        '''Returns if the user is a admin or not'''
-        return self.admin
-
-    def is_teacher(self) -> bool:
-        '''Returns if the user is a teacher or not'''
-        return self.teacher
-    
-    def is_student(self) -> bool:
-        '''Returns if the user is a student or not'''
-        return self.student
     
 
-    # def is_
 
-    class Meta:
-        db_table = 'ExtUser'
+# class TimeSlots(models.Model):
+#     class Meta:
+#         db_name = 'time_slots'
+    
+#     appliction = models.ForeignKey(Application, on_delete=models.CASCADE)
+#     time = slot
+    
 
 
 
