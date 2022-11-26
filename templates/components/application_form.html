@@ -1,0 +1,87 @@
+<div class="container-fluid pt-4 pt-xl-5 my-5  px-5">
+    <div class="card shadow">
+        <form method="post" id="form" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card-header py-3">
+                <div class="row">
+                    <div class="col ">
+                        <h4 class=" text-primary mw-0 fw-bold" style="text-align: center ;">Apply Form for a Room</h4>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-body">
+                    <div class="row">
+                        <div class="col col-md-12 col-sm-12 col-lg-6 col-12">
+                            <div class="mb-3">
+                                <!--  -->
+                                <label class="form-label" for="room">Room:</label>
+                                <select id="room" placeholder="room_number">
+                                  </select>
+                                <!--  -->
+                            </div>
+                            <!-- r -->
+                            
+                        </div>
+                        <div class="col col-md-12 col-sm-12 col-lg-6 col-12">
+                            <div class="mb-3">
+                                <label class="form-label" for="date">Date:</label>
+                                <input class="form-control inp" type="date" name="date" step="any" required id="date" >
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div id="times">
+                        <div class="row" id="row_1">
+                            <div class="col col-12">
+                                <div class="mb-3">
+                                    <label class="form-label" for="room">Time:</label>
+                                    <select id="time_1" placeholder="room_number">
+                                        <option value="1">8:00am - 9:20am</option>
+                                        <option value="2">9:30am - 10:50am</option>
+                                        <option value="3">11:00am - 12:20am</option>
+                                        <option value="4">12:30am - 1:50am</option>
+                                        <option value="5">2:00am - 3:20am</option>
+                                        <option value="6">3:30am - 5:20am</option>
+                                      </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-lg-6 col-sm-6 col-12 col-md-6">
+                            <button type="button" class="btn btn-primary container-fluid" onclick="add_another();">Add Another</button>
+                        </div>
+                        <div class="col col-lg-6 col-sm-6 col-12 col-md-6">
+                            <button type="button" class="btn btn-primary container-fluid" onclick="remove_last();">Remove</button>
+                        </div>
+                    </div>
+                    <div class="row my-3">
+                        <div class="col-12">
+                            <div class="input-group">
+                                <span class="input-group-text">Reason</span>
+                                <textarea id="reason" class="form-control" aria-label="With textarea"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+            <div class="card-footer text-center">
+                <div class="row">
+                    <div class="col " style="background-color: #f8f9fc;">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% load static %} 
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'selectise/selectise.js' %}"></script>
+<script src="{% static 'js/apply.js' %}"></script>
+
+
+

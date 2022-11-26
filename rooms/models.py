@@ -24,7 +24,7 @@ class Room(models.Model):
 
 class Booking(models.Model):
     date = models.DateField(null = False )
-    time_slot = models.CharField(max_length=200,default='')
+    time_slot = models.CharField(max_length=20,default='')
     room = models.ForeignKey(Room, on_delete = models.CASCADE)
     reason = models.CharField(max_length=500,null=True)
     approval = models.BooleanField(null=True)
@@ -37,7 +37,13 @@ class Booking(models.Model):
 
 
 
+class ApprovedTiming(models.Model):
+    class Meta:
+        db_table = 'Booked_timing'
 
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    timinings = models.CharField(max_length=50)
+    date = models.DateField()
     
 
 
