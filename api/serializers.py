@@ -13,6 +13,12 @@ class BookingSerialzer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class BookingApprovalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Booking
+        fields = ['id', 'faculty','room_number','date','time_slot']
+
+
 class BookingAddSerialzer(serializers.ModelSerializer):
     class Meta:
         model = models.Booking

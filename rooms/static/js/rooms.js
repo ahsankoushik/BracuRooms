@@ -14,10 +14,12 @@ $('form').submit(function(e){
             contentType: false,
             processData: false,
             success: function() { 
-                console.log('succes');
+                console.log('success');
                 window.location.href = "../rooms";
             },
-            error: function(res) { console.log(res); }
+            error: function(res) { 
+                if(`{"room_number":["room with this room number already exists."]}`==res['responseText'])
+                alert('A room with that room number already exists.'); }
     
     })
 }

@@ -30,10 +30,18 @@ class Booking(models.Model):
     approval = models.BooleanField(null=True)
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
 
-
-
     class Meta:
         db_table = 'Booking'
+
+    @property
+    def faculty(self) -> str:
+        '''Returns the name of the teacher who applied for the slot'''
+        return self.user.username
+
+    @property
+    def room_number(self) -> str:
+        '''Returns the room number and room type of booking'''
+        return str(self.room)
 
 
 

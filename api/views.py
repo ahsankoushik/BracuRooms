@@ -52,6 +52,7 @@ def booking(request):
     if request.method == 'GET':
         bookings = models.Booking.objects.all()
         serializer = serializers.BookingSerialzer(bookings, many= 1)
+        # print(type(serializer.data))
         return Response(serializer.data)
     elif request.method == 'POST':
         if request.user.is_staff:
@@ -61,6 +62,31 @@ def booking(request):
                 temp = serializer.save()
                 temp.user = request.user
                 temp.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
         else: return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+
+@login_required
+@api_view(['GET'])
+def get_booking_approval(request):
+    bookings = models.Booking.objects.filter(approval = None)
+    serializer = serializers.BookingApprovalSerializer(bookings,many= True)
+    return Response(serializer.data)
+
+@login_required
+@api_view(['GET'])
+def approve(request,id,flag):
+    if request.method == 'GET':
+        if request.user.is_superuser:
+            book = models.Booking.objects.get(id=id)
+            if int(flag)<0 or int(flag)>1 :
+                flag = None
+            book.approval = flag
+            book.save()
+            return Response(status=status.HTTP_200_OK)
+        else: Response(status=status.HTTP_401_UNAUTHORIZED)
+
+
+            
