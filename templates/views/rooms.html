@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Rooms</title>
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'notify/notify.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
 </head>
 
@@ -46,7 +47,7 @@
                     <div class="card-header py-3">
                         <div class="row">
                             <div class="col ">
-                                <h4 class=" text-primary mw-0 fw-bold" style="text-align: center ;">Add a Room</h4>
+                                <h4 class=" text-primary mw-0 fw-bold" style="text-align: center;">Add a Room</h4>
                             </div>
                         </div>
 
@@ -56,7 +57,7 @@
                                 <div class="col col-md-12 col-sm-12 col-lg-6 col-12">                        
                                     <div class="mb-3">
                                         <label class="form-label" for="room_number">Room Number:</label>
-                                        <input class="form-control inp" type="text" name="room_number" minlength="7" maxlength="9" required id="room_number"  placeholder="UB******" >
+                                        <input class="form-control inp" type="text" name="room_number" minlength="7" maxlength="8" required id="room_number"  placeholder="UB******" >
                                     </div> 
                                 </div>
                                 <div class="col col-md-12 col-sm-12 col-lg-6 col-12">
@@ -91,6 +92,7 @@
     
     <script src="{% static 'js/jquery.js' %}"></script>
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'notify/notify.js' %}"></script>
     <script src="{% static 'js/rooms.js' %}"></script>
 </body>
 

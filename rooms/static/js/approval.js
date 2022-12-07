@@ -1,7 +1,7 @@
 function get(){
 
 
-    let api = new XMLHttpRequest;
+    // let api = new XMLHttpRequest;
     let count = parseInt(document.getElementById("count").value);
 
     let page = parseInt(document.getElementById("page_count").innerText) ;
@@ -16,13 +16,13 @@ function get(){
         let html = '';
         for(x in res){
             // console.log(res[x].faculty);
-            html += `<tr class="text-center">
+            html += `<tr class="text-center" id ="${res[x].id}">
                 <td>${res[x].faculty}</td>
                 <td>${res[x].room_number}</td>
                 <td>${res[x].date}</td>
                 <td>${res[x].time_slot}</td>
                 <td><button class="btn btn-success" onClick= "approve(${res[x].id},1)">&#10003;</a></td>
-                <td><button class="btn btn-danger" onClick= "approve(${res[x].id},1)"">X</a></td>
+                <td><button class="btn btn-danger" onClick= "approve(${res[x].id},0)"">X</a></td>
             </tr>`;
         }
         document.getElementById('booking_details').innerHTML = html;
@@ -42,7 +42,15 @@ function approve(id,approval){
         type:'GET',
         
         success:(function(res){
-            window.location.href = '../apply';
+            // window.location.href = '../apply';
+            document.getElementById(id).style.display = 'none'
+            let faculty = document.getElementById(id).children[0].innerText
+            if (approval == 1){
+                $.notify({title :'Approved', content:'The application of '+faculty +' is approved', timeout:5000});
+            }else{
+                $.notify({title :'Rejected', content:'The application of '+faculty +' is rejected', timeout:5000});
+            }
+            
         }),
         error: (function(e){
             console.log('error');
