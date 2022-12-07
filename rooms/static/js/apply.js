@@ -1,4 +1,12 @@
 // $('select').selectize()
+
+let apply = window.localStorage.getItem('apply')
+if (apply == "done"){
+    $.notify({title :'Success', content:'Your application is sucsessfully added', timeout:5000});
+    window.localStorage.setItem('apply','')
+}
+
+
 var t;
 $.ajax({
     url : '../api/rooms',
@@ -101,6 +109,7 @@ $('form').submit(function(e){
             processData: false,
             success: function() { 
                 console.log('succes');
+                window.localStorage.setItem('apply','done')
                 window.location.href = "../apply";
             },
             error: function(res) { console.log(res); }

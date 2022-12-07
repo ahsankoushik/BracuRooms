@@ -1,0 +1,77 @@
+
+<div class="container-fluid pt-4 pt-xl-5 my-5  px-5">
+    <div class="card shadow">
+        <div class="card-header py-3">
+            <div class="row">
+                <div class="col col-12">
+                    <h4 class="text-primary m-0 fw-bold" style="text-align: center;">Approve Applications</h4>
+                </div>
+                <!-- <div class="col col-6"><a href="/sells/add" class="btn btn-primary" style="float: right;/*right: 1%;">Add Sells</a></div> -->
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 text-nowrap">
+                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label class="form-label">Show&nbsp;<select id="count" class="d-inline-block form-select form-select-sm">
+                                <option value="10" selected>10</option>
+                                <option value="20">20</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>&nbsp;</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-md-end dataTables_filter" id="dataTable_filter"><label class="form-label"><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label></div>
+                </div>
+            </div>
+            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                <table class="table my-0" id="dataTable">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Faculty</th>
+                            <th>Room</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th style="text-align: center;">Accept</th>
+                            <th>Reject</th>
+                        </tr>
+                    </thead>
+                        <tbody id="booking_details">
+                        </tbody>
+                    <tfoot>
+                        <tr class="text-center">
+                            <th>Faculty</th>
+                            <th>Room</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th style="text-align: center;">Accept</th>
+                            <th>Reject</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="row">
+                <div class="col-md-6 align-self-center">
+                    <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Total {{ total }}</p>
+                </div>
+                <div class="col-md-6">
+                    <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+                        <ul class="pagination">
+                            <li class="page-item "><a class="page-link" aria-label="Previous" href="#" onclick="prevpage()"><span aria-hidden="true">«</span></a></li>
+                            <li class="page-item active"><p class="page-link" id="page_count">1</p></li>
+                            <!-- <li class="page-item"><a class="page-link" href="#" ></a></li>
+                            <li class="page-item"><a class="page-link" href="#" ></a></li> -->
+                            <li class="page-item"><a class="page-link" aria-label="Next" href="#" onclick="nextpage()"><span aria-hidden="true">»</span></a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% load static %}
+<link rel="stylesheet" href="{% static 'notify/notify.css' %}">
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'notify/notify.js' %}"></script>
+<script src="{% static 'js/approval.js' %}"></script>
