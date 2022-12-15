@@ -16,10 +16,10 @@ class BookingSerialzer(serializers.ModelSerializer):
 class BookingApprovalSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Booking
-        fields = ['id', 'faculty','room_number','date','time_slot']
+        fields = ['id', 'faculty','room_number','date']
 
 
 class BookingAddSerialzer(serializers.ModelSerializer):
     class Meta:
         model = models.Booking
-        fields = ['date','room','time_slot','reason']
+        fields = ['date','room','reason']

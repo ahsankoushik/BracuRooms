@@ -7,9 +7,9 @@
     border-radius: 8px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    border: 1px solid #3c66c9;
+    border: 1px solid #18e578;
     position: fixed;
-    background-color: rgb(99, 168, 233);
+    background-color: rgb(99, 233, 166);
     -webkit-box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
     -webkit-transition: opacity .3s, left .3s, right .3s, top .4s, bottom .3s, -webkit-transform .3s;
@@ -34,7 +34,7 @@
 .el-notification-title {
     font-weight: 700;
     font-size: 16px;
-    color: #303133;
+    color: #c1c8d7;
     margin: 0;
     cursor:pointer;
 }
@@ -43,7 +43,7 @@
     font-size: 14px;
     line-height: 21px;
     margin: 6px 0 0;
-    color: #606266;
+    color: #e5e8ef;
     text-align: justify;
     cursor:pointer;
 }

@@ -56,12 +56,18 @@ def booking(request):
         return Response(serializer.data)
     elif request.method == 'POST':
         if request.user.is_staff:
-
             serializer = serializers.BookingAddSerialzer(data = request.data)
+                
             if serializer.is_valid():
                 temp = serializer.save()
                 temp.user = request.user
                 temp.save()
+                booking = models.Booking.objects.get(id=temp.id)
+                for x in request.data['time_slot'].split(',')[:-1]:
+
+                    time = models.TimeSlot(booking=booking,timeslot=x)
+                    time.save()
+                
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
