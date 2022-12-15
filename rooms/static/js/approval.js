@@ -34,7 +34,7 @@ get();
 
 document.getElementById("count").addEventListener('change',get);
 
-
+var a;
 function approve(id,approval){
     console.log(id,approval);
     $.ajax({
@@ -43,6 +43,7 @@ function approve(id,approval){
         
         success:(function(res){
             // window.location.href = '../apply';
+            // console.log(res.status);
             document.getElementById(id).style.display = 'none'
             let faculty = document.getElementById(id).children[0].innerText
             if (approval == 1){
@@ -54,7 +55,9 @@ function approve(id,approval){
         }),
         error: (function(e){
             console.log('error');
-            console.log(e);
+            if (e.status == 409){
+                alert("This time is already been booked")
+            }
         })
 
     })

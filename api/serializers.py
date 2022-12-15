@@ -23,3 +23,9 @@ class BookingAddSerialzer(serializers.ModelSerializer):
     class Meta:
         model = models.Booking
         fields = ['date','room','reason']
+
+
+class FreeRoomSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Room
+        fields = ['id','__str__']

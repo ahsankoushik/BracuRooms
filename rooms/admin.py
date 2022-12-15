@@ -10,7 +10,7 @@ class RoomsAdmin(admin.ModelAdmin):
 
 
 class BookingsAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'date','room')
+    list_display = ('id', 'user', 'date','room','approval')
 
 
 class TeacherApplicationAdmin(admin.ModelAdmin):

@@ -79,20 +79,60 @@ def booking(request):
 def get_booking_approval(request):
     bookings = models.Booking.objects.filter(approval = None)
     serializer = serializers.BookingApprovalSerializer(bookings,many= True)
-    return Response(serializer.data)
+    data = []
+    c = 0
+    for x in range(len(serializer.data)):
+        data.append(dict(serializer.data[x]))
+        time_slots = ''
+        for y in models.TimeSlot.objects.filter(booking = data[c]['id']):
+            time_slots += str(y.timeslot) +', '
+
+        data[c]['time_slot'] = time_slots
+        c += 1
+
+    return Response(data)
 
 @login_required
 @api_view(['GET'])
 def approve(request,id,flag):
     if request.method == 'GET':
         if request.user.is_superuser:
-            book = models.Booking.objects.get(id=id)
             if int(flag)<0 or int(flag)>1 :
                 flag = None
+            book = models.Booking.objects.get(id=id)
+            times = []
+            for x in models.TimeSlot.objects.filter(booking= book):
+                times.append(x.timeslot)
+            temp = models.Booking.objects.raw(f'''select * from Booking b inner join time_slot t on b.id = t.booking_id where b.date = "{book.date}" and b.room_id ={book.id_room} and t.timeslot in {tuple(times)} and  b.approval=1;''')
+            if len(temp)>0:
+                return Response(status=status.HTTP_409_CONFLICT)
+            
+            # if flag != None and 
+            
             book.approval = flag
+            book.approver = request.user
             book.save()
             return Response(status=status.HTTP_200_OK)
         else: Response(status=status.HTTP_401_UNAUTHORIZED)
+
+
+@login_required
+@api_view(['POST'])
+def free_room(request):
+    date = request.data['date']
+    time_slot = request.data['time_slot'].split(',')
+    if time_slot[-1] == '' or time_slot[-1] == ' ':time_slot.pop(-1)
+    
+    temp = models.Booking.objects.raw(f'''select id from Room where id not in(select b.room_id from Booking b inner join time_slot t on b.id = t.booking_id where b.date = "{date}"  and t.timeslot in {tuple(time_slot)} and b.approval =1 )''')
+    frees = []
+    for x in temp: 
+        frees.append(x.id)
+    rooms = models.Room.objects.filter(id__in=frees)
+    serializer = serializers.FreeRoomSerializer(rooms, many =1 )
+
+    
+
+    return Response(serializer.data)
 
 
             

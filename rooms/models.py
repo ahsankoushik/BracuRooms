@@ -28,7 +28,7 @@ class Booking(models.Model):
     room = models.ForeignKey(Room, on_delete = models.CASCADE)
     reason = models.CharField(max_length=500,null=True)
     approval = models.BooleanField(null=True)
-    approver = models.ForeignKey(User, on_delete= models.CASCADE,related_name='approver')
+    approver = models.ForeignKey(User, on_delete= models.CASCADE, null = True, related_name='approver')
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,related_name='applier')
 
     class Meta:
@@ -43,6 +43,11 @@ class Booking(models.Model):
     def room_number(self) -> str:
         '''Returns the room number and room type of booking'''
         return str(self.room)
+
+    @property
+    def id_room(self) -> str:
+        '''Return the id of the room'''
+        return self.room.id
 
 
 class TimeSlot(models.Model):
