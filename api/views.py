@@ -9,6 +9,7 @@ from rest_framework.response import Response
 # from django.contrib.auth import login
 from . import serializers
 from rooms import models
+from datetime import datetime
 
 # Create your views here.
 
@@ -42,7 +43,7 @@ def rooms(request):
 # @api_view(['POST'])
 # def book_a_cmputer(request):
 #     if request.method == 'POST':
-#         models.Room.objects.filter(room_type='lab',seats__lt=31)
+#         models.Room.yyyyobjects.filter(room_type='lab',seats__lt=31)
         
 
 
@@ -118,14 +119,56 @@ def approve(request,id,flag):
 
 @login_required
 @api_view(['POST'])
-def free_room(request):
+def free_room_teacher(request):
     date = request.data['date']
-    time_slot = request.data['time_slot'].split(',')
+    today = False
+    if date == str(datetime.now())[:10]: today = 1
+    time_slot = request.data['time_slot'].strip()
+    time_str = '(' + str(time_slot) 
+    if time_str[-1] == ',': time_str = time_str[:-1]
+    time_str += ')'
+    # print(time_str)
     if time_slot[-1] == '' or time_slot[-1] == ' ':time_slot.pop(-1)
-    
-    temp = models.Booking.objects.raw(f'''select id from Room where id not in(select b.room_id from Booking b inner join time_slot t on b.id = t.booking_id where b.date = "{date}"  and t.timeslot in {tuple(time_slot)} and b.approval =1 )''')
+    if today:
+        st_book = models.Room.objects.raw("select * from Room where booked > 0")
+        booked = []
+        for x in st_book :
+            booked.append(x.id)
+
+
+    temp = models.Booking.objects.raw(f'''select id from Room where id not in
+                                            (select b.room_id from Booking b inner join time_slot t on b.id = t.booking_id 
+                                            where b.date = "{date}"  and t.timeslot in {time_str} and b.approval =1 )''')
+    # print(temp)
     frees = []
     for x in temp: 
+        if   today:
+            if x.id in booked:
+                continue
+        frees.append(x.id)
+    rooms = models.Room.objects.filter(id__in=frees)
+    serializer = serializers.FreeRoomSerializer(rooms, many =1 )
+    return Response(serializer.data)
+
+
+@login_required
+@api_view(['POST'])
+def free_room_st(request):
+    date = request.data['date']
+    time_slot = request.data['time_slot'].strip()
+    time_str = '(' + str(time_slot) 
+    if time_str[-1] == ',': time_str = time_str[:-1]
+    time_str += ')'
+    if time_slot[-1] == '' or time_slot[-1] == ' ':time_slot.pop(-1)
+    st_book = models.Room.objects.raw("select * from Room where booked = seats")
+    booked = []
+    for x in st_book :
+        booked.append(x.id)
+    temp = models.Booking.objects.raw(f'''select id from Room where id not in(select b.room_id from Booking b inner join time_slot t on b.id = t.booking_id where b.date = "{date}"  and t.timeslot in {time_str} and b.approval =1 )''')
+    frees = []
+    for x in temp: 
+        if x.id in booked:
+            continue
         frees.append(x.id)
     rooms = models.Room.objects.filter(id__in=frees)
     serializer = serializers.FreeRoomSerializer(rooms, many =1 )
@@ -134,5 +177,40 @@ def free_room(request):
 
     return Response(serializer.data)
 
+@login_required
+@api_view(['GET'])
+def book_a_seat(request,room):
+    try: 
+        seat = models.RequestsForSeats.objects.get(user = request.user)
+        if seat.seats_requested == 1:
+            return Response(status=status.HTTP_409_CONFLICT,data='You have already one seat booked')
+    except:
+        seat = models.RequestsForSeats(user=request.user)
+    r = models.Room.objects.get(id = room)
 
-            
+    if r.booked == r.seats:
+        return Response('class full')
+    seat.Room_number = r
+    seat.seats_requested = 1
+    r.booked += 1
+
+    r.save()
+    seat.save()
+
+    return Response(status=status.HTTP_200_OK)
+
+    
+
+
+
+@login_required
+@api_view(['GET'])
+def remove_seat(request):
+    seat = models.RequestsForSeats.objects.get(user=request.user)
+    r = models.Room.objects.get(id = seat.Room_number.id)
+    r.booked -= 1
+    seat.Room_number = None
+    seat.seats_requested = 0 
+    r.save()
+    seat.save()
+    return Response(status=status.HTTP_200_OK)

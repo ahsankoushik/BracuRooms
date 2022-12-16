@@ -26,7 +26,7 @@
                         <div class="col col-md-12 col-sm-12 col-lg-6 col-12">
                             <div class="mb-3">
                                 <label class="form-label" for="date">Date:</label>
-                                <input class="form-control inp" type="date" name="date" step="any" required id="date" >
+                                <input class="form-control inp"  type="date"  id="date"  name="date" step="any" required id="date" >
                             </div>
                             
                         </div>
@@ -36,7 +36,7 @@
                             <div class="col col-12">
                                 <div class="mb-3">
                                     <label class="form-label" for="room">Time:</label>
-                                    <select id="time_1" placeholder="room_number">
+                                    <select id="time_1" class="form-select" placeholder="room_number">
                                         <option value="1">8:00am - 9:20am</option>
                                         <option value="2">9:30am - 10:50am</option>
                                         <option value="3">11:00am - 12:20am</option>
@@ -80,6 +80,7 @@
 {% load static %} 
 <link rel="stylesheet" href="{% static 'notify/notify.css' %}">
 <script src="{% static 'js/jquery.js' %}"></script>
+<!-- <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script> -->
 <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'selectise/selectise.js' %}"></script>
 <script src="{% static 'notify/notify.js' %}"></script>

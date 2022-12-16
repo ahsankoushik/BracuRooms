@@ -1,7 +1,6 @@
 // console.log(document.title)
 switch(document.title){
     case "Home":
-        console.log('hoime');
         document.getElementById("home").classList.add("active");
         break
     case "Status":

@@ -81,8 +81,8 @@ class RequestsForSeats(models.Model):
     class Meta:
         db_table = 'seat_request'
     user = models.ForeignKey(User,on_delete= models.CASCADE,null = True)
-    Room_number = models.ForeignKey(Room,on_delete=models.CASCADE)
-    seats_requested = models.IntegerField(blank= True,default =1)
+    Room_number = models.ForeignKey(Room,on_delete=models.CASCADE,blank= True,null= True)
+    seats_requested = models.BooleanField(blank= True,default =0,null=True)
 
 # class AdminApproves(models.Model):
 #     class Meta:
