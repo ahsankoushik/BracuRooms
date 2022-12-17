@@ -54,6 +54,7 @@
                         <div class="row">
                                 <div class="col text-center" >
                                     <button class="btn btn-primary" type="submit">Find</button>
+                                    <button class="btn btn-danger" onclick="remove_booking()">Revoke my Booking</button>
                                 </div>
                             </div>
                         </div>
@@ -89,6 +90,7 @@
     </div>
 </div>
 
+    <link rel="stylesheet" href="{% static 'notify/notify.css' %}">
     <script src="{% static 'js/jquery.js' %}"></script>
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'notify/notify.js' %}"></script>

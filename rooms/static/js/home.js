@@ -56,8 +56,38 @@ function book_a_seat(room){
             if (e.status == 409){
                 alert("You have a privous booking")
             }
+            else if(e.status == 401){
+                alert("You can not book a seat")
+            }
         })
 
     })
 
+}
+
+function remove_booking(){
+    $.ajax({
+        url:`../api/remove_seat`,
+        type:'GET',
+        
+        success:(function(res){
+            // window.location.href = '../apply';
+            // console.log(res.status);
+
+
+            $.notify({title :'Success', content:'A seat has Revoked ', timeout:5000});
+
+            
+        }),
+        error: (function(e){
+            console.log('error');
+            if (e.status == 409){
+                alert("You have a no privous booking")
+            }
+            else if(e.status == 401){
+                alert("You can not book a seat")
+            }
+        })
+
+    })
 }

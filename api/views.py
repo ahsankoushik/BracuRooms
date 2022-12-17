@@ -122,9 +122,11 @@ def approve(request,id,flag):
             for x in models.TimeSlot.objects.filter(booking= book):
                 # select * from time_slot where booking_id = {book_id}
                 times.append(x.timeslot)
-            temp = models.Booking.objects.raw(f'''select * from Booking b inner join time_slot t on b.id = t.booking_id where b.date = "{book.date}" and b.room_id ={book.id_room} and t.timeslot in {tuple(times)} and  b.approval=1;''')
-            if len(temp)>0:
-                return Response(status=status.HTTP_409_CONFLICT)
+            temp = models.Booking.objects.raw(f'''select * from Booking b inner join time_slot t on b.id = t.booking_id where b.date = "{book.date}" and b.room_id ={book.id_room} and t.timeslot in (select timeslot from time_slot where id = {book.id}) and  b.approval=1;''')
+            print(temp)
+            if flag == 1:
+                if len(temp)>0:
+                    return Response(status=status.HTTP_409_CONFLICT)
             
             # if flag != None and 
             
@@ -207,6 +209,8 @@ def free_room_st(request):
 @login_required
 @api_view(['GET'])
 def book_a_seat(request,room):
+    if request.user.is_superuser or request.user.is_staff:
+        return Response(status=status.HTTP_401_UNAUTHORIZED,data='You can not apply for a seat')
     try: 
         seat = models.RequestsForSeats.objects.get(user = request.user)
         # select * from request_for_seat where user_id = {request.user.id}
@@ -238,6 +242,8 @@ def book_a_seat(request,room):
 @api_view(['GET'])
 def remove_seat(request):
     seat = models.RequestsForSeats.objects.get(user=request.user)
+    if seat.seats_requested == 0:
+        return Response(status=status.HTTP_409_CONFLICT)
     # select * from request_for_seat where user_id = {request.user.id}
     r = models.Room.objects.get(id = seat.Room_number.id)
     # select * from Room where id = {room}
