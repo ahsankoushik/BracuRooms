@@ -31,11 +31,13 @@ class Entrypoint(generics.GenericAPIView):
 def rooms(request):
     if request.method == 'GET':
         rooms = models.Room.objects.all()
+        # select * from Room;
         serializer = serializers.RoomSerializer(rooms, many = True)
         return Response(serializer.data)
     elif request.method == 'POST':
         if request.user.is_superuser:
             serializer = serializers.RoomSerializer(data = request.data)
+            #insert into Room(room,type) values(request.room,request.type)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data,status=status.HTTP_201_CREATED)
