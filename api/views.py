@@ -22,6 +22,10 @@ class Entrypoint(generics.GenericAPIView):
         return Response(dic)
 
 
+
+#-----------------------------------------------------------Syed Hasnat Jami-----------------------------------------------------------------#
+
+
 @login_required
 @api_view(['GET','POST'])
 def rooms(request):
@@ -51,22 +55,26 @@ def rooms(request):
 @api_view(['GET','POST'])
 def booking(request):
     if request.method == 'GET':
-        bookings = models.Booking.objects.all()
+        bookings = models.Booking.objects.all()   
+        # select * from booking;
         serializer = serializers.BookingSerialzer(bookings, many= 1)
         # print(type(serializer.data))
         return Response(serializer.data)
     elif request.method == 'POST':
         if request.user.is_staff:
             serializer = serializers.BookingAddSerialzer(data = request.data)
-                
+            #insert into Booking(date,room,reason) values(request.date,request.room,request.reason)
+
             if serializer.is_valid():
                 temp = serializer.save()
-                temp.user = request.user
+                temp.user = request.user 
+                # update booking set user_id = request.user.id 
                 temp.save()
                 booking = models.Booking.objects.get(id=temp.id)
                 for x in request.data['time_slot'].split(',')[:-1]:
 
                     time = models.TimeSlot(booking=booking,timeslot=x)
+                    #insert into time_slot(booking,timeslot) values({booking},{timeslot})
                     time.save()
                 
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -79,6 +87,7 @@ def booking(request):
 @api_view(['GET'])
 def get_booking_approval(request):
     bookings = models.Booking.objects.filter(approval = None)
+    #select * from booking where approal != null
     serializer = serializers.BookingApprovalSerializer(bookings,many= True)
     data = []
     c = 0
@@ -86,12 +95,17 @@ def get_booking_approval(request):
         data.append(dict(serializer.data[x]))
         time_slots = ''
         for y in models.TimeSlot.objects.filter(booking = data[c]['id']):
+            # select * from time_slot where booking = {data[c]['id']}
             time_slots += str(y.timeslot) +', '
 
         data[c]['time_slot'] = time_slots
         c += 1
 
     return Response(data)
+
+
+#-----------------------------------------------------------Md Ahsan Hasib------------------------------------------------------------------#
+
 
 @login_required
 @api_view(['GET'])
@@ -101,8 +115,10 @@ def approve(request,id,flag):
             if int(flag)<0 or int(flag)>1 :
                 flag = None
             book = models.Booking.objects.get(id=id)
+            # select * from booking where id = {id};
             times = []
             for x in models.TimeSlot.objects.filter(booking= book):
+                # select * from time_slot where booking_id = {book_id}
                 times.append(x.timeslot)
             temp = models.Booking.objects.raw(f'''select * from Booking b inner join time_slot t on b.id = t.booking_id where b.date = "{book.date}" and b.room_id ={book.id_room} and t.timeslot in {tuple(times)} and  b.approval=1;''')
             if len(temp)>0:
@@ -110,8 +126,8 @@ def approve(request,id,flag):
             
             # if flag != None and 
             
-            book.approval = flag
-            book.approver = request.user
+            book.approval = flag    # update booking set approval = {flag} where id = {id};
+            book.approver = request.user # update booking set approver = {request.user} where id = {id};
             book.save()
             return Response(status=status.HTTP_200_OK)
         else: Response(status=status.HTTP_401_UNAUTHORIZED)
@@ -147,6 +163,7 @@ def free_room_teacher(request):
                 continue
         frees.append(x.id)
     rooms = models.Room.objects.filter(id__in=frees)
+    # select * from Room where id in {frees}
     serializer = serializers.FreeRoomSerializer(rooms, many =1 )
     return Response(serializer.data)
 
@@ -171,29 +188,41 @@ def free_room_st(request):
             continue
         frees.append(x.id)
     rooms = models.Room.objects.filter(id__in=frees)
+    # select * from Room where id in {frees}
     serializer = serializers.FreeRoomSerializer(rooms, many =1 )
 
-    
-
     return Response(serializer.data)
+
+
+
+
+
+
+
+#----------------------------------------------------------------- Archana Das-----------------------------------------------------------#
+
 
 @login_required
 @api_view(['GET'])
 def book_a_seat(request,room):
     try: 
         seat = models.RequestsForSeats.objects.get(user = request.user)
+        # select * from request_for_seat where user_id = {request.user.id}
         if seat.seats_requested == 1:
             return Response(status=status.HTTP_409_CONFLICT,data='You have already one seat booked')
     except:
         seat = models.RequestsForSeats(user=request.user)
+        # insert into request_for_seat(user_id = {request.user.id});
     r = models.Room.objects.get(id = room)
+    # select * from Room where id = {room}
 
     if r.booked == r.seats:
         return Response('class full')
-    seat.Room_number = r
+    seat.Room_number = r 
     seat.seats_requested = 1
+    # update request_for_seat set Room_number = {r}, seats_requested = 1 where id = {request.user.id} 
     r.booked += 1
-
+    #update room set booked = booked+1
     r.save()
     seat.save()
 
@@ -207,10 +236,14 @@ def book_a_seat(request,room):
 @api_view(['GET'])
 def remove_seat(request):
     seat = models.RequestsForSeats.objects.get(user=request.user)
+    # select * from request_for_seat where user_id = {request.user.id}
     r = models.Room.objects.get(id = seat.Room_number.id)
+    # select * from Room where id = {room}
     r.booked -= 1
+    #update room set booked = booked-1
     seat.Room_number = None
     seat.seats_requested = 0 
+    # update request_for_seat set Room_number = null, seats_requested = 0 where id = {request.user.id} 
     r.save()
     seat.save()
     return Response(status=status.HTTP_200_OK)

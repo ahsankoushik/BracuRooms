@@ -1,7 +1,6 @@
 from django.db import models
-from django.core.validators import validate_comma_separated_integer_list
+
 # Create your models here.
-from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
@@ -19,6 +18,21 @@ class Room(models.Model):
 
     class Meta:
         db_table = 'Room'
+
+
+'''
+CREATE TABLE `Room` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `room_number` varchar(8) NOT NULL,
+  `room_type` varchar(30) NOT NULL,
+  `seats` int NOT NULL,
+  `booked` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `room_number` (`room_number`)
+) 
+'''
+
+
 
 
 
@@ -50,12 +64,66 @@ class Booking(models.Model):
         return self.room.id
 
 
+
+
+'''
+CREATE TABLE `Booking` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `reason` varchar(500) DEFAULT NULL,
+  `approval` tinyint(1) DEFAULT NULL,
+  `approver_id` int DEFAULT NULL,
+  `room_id` bigint NOT NULL,
+  `user_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`approver_id`) REFERENCES `auth_user` (`id`),
+  FOREIGN KEY (`room_id`) REFERENCES `Room` (`id`),
+  FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+) 
+'''
+
+
+
+
+
 class TimeSlot(models.Model):
     class Meta:
         db_table = 'time_slot'
     booking = models.ForeignKey(Booking, on_delete=models.CASCADE,null=False)
     timeslot = models.IntegerField()
 
+
+'''
+CREATE TABLE `time_slot` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `timeslot` int NOT NULL,
+  `booking_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`booking_id`) REFERENCES `Booking` (`id`)
+) 
+'''
+
+
+
+class RequestsForSeats(models.Model):
+    class Meta:
+        db_table = 'seat_request'
+    user = models.ForeignKey(User,on_delete= models.CASCADE,null = True)
+    Room_number = models.ForeignKey(Room,on_delete=models.CASCADE,blank= True,null= True)
+    seats_requested = models.BooleanField(blank= True,default =0,null=True)
+
+
+'''
+CREATE TABLE `seat_request` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `seats_requested` tinyint(1) DEFAULT NULL,
+  `Room_number_id` bigint DEFAULT NULL,
+  `user_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`Room_number_id`) REFERENCES `Room` (`id`),
+  FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+)
+'''
 
 
 
@@ -76,13 +144,6 @@ class TimeSlot(models.Model):
 # #     email = models.CharField(max_lengh=30)
 # #     password = models.CharField(max_lengh=4)
         
-
-class RequestsForSeats(models.Model):
-    class Meta:
-        db_table = 'seat_request'
-    user = models.ForeignKey(User,on_delete= models.CASCADE,null = True)
-    Room_number = models.ForeignKey(Room,on_delete=models.CASCADE,blank= True,null= True)
-    seats_requested = models.BooleanField(blank= True,default =0,null=True)
 
 # class AdminApproves(models.Model):
 #     class Meta:

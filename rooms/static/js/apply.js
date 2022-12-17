@@ -14,7 +14,7 @@ if (apply == "done"){
 }
 
 var count = 2;
-$('#room').selectize()
+// $('#room').selectize()
 var t;
 function get_room(){
     let formdata = new FormData();
@@ -34,7 +34,8 @@ function get_room(){
         processData: false,
         success : function(res){
             console.log(res);
-            $('#room').selectize()[0].selectize.destroy();
+            // $('#room').selectize()[0].selectize.destroy();
+            document.getElementById('room').innerHTML= ''
             t = res;
             let option;
             for(x in res){
@@ -46,7 +47,7 @@ function get_room(){
                 // }
                 document.getElementById("room").appendChild(option);
             }
-            $('#room').selectize()
+            // $('#room').selectize()
     
         },
         error : function(res){
